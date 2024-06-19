@@ -1,7 +1,7 @@
 import type { GestureResponderEvent } from 'react-native'
 
-import Animated from 'react-native-reanimated';
-import { Pressable, View, ViewProps } from 'react-native'
+import Animated from 'react-native-reanimated'
+import { Pressable, ViewProps } from 'react-native'
 import { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import LinearGradient from 'react-native-linear-gradient'
 
@@ -27,24 +27,22 @@ export const Button = ({ children, onPress, style, ...props }: ButtonProps & Vie
       onPressOut={() => progress.value = 1}
       onPress={onPress}
     >
-      <View>
-        <AnimatedLinearGradient
-          useAngle
-          angle={45}
-          colors={[
-            theme.colors.brand.primary,
-            theme.colors.brand.secondary,
-          ]}
-          style={[
-            styles.button,
-            style,
-            animatedStyle,
-          ]}
-          {...props}
-        >
-          {children}
-        </AnimatedLinearGradient>
-      </View>
+      <AnimatedLinearGradient
+        useAngle
+        angle={45}
+        colors={[
+          theme.colors.brand.primary,
+          theme.colors.brand.secondary,
+        ]}
+        style={[
+          styles.button,
+          style,
+          animatedStyle,
+        ]}
+        {...props}
+      >
+        {children}
+      </AnimatedLinearGradient>
     </Pressable>
   )
 }
