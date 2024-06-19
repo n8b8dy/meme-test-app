@@ -6,10 +6,11 @@ export const theme = {
     },
     text: {
       primary: '#FFF',
-      secondary: "#CECECE"
+      secondary: '#CECECE',
     },
     background: {
       primary: '#131112',
     },
+    danger: '#D50000',
   },
 }
