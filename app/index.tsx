@@ -1,23 +1,13 @@
-import { Image, ScrollView, Text, View } from 'react-native'
+import type { MemeAPIResponse } from '@/types/api/meme'
+
+import { useState } from 'react'
+import { Image, Text, View } from 'react-native'
 import { useSafeAreaFrame, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useQuery } from '@tanstack/react-query'
+import { ImageZoom } from '@likashefqet/react-native-image-zoom'
 
 import { Button } from '@/components/buttons/Button'
 import { createThemedStyles } from '@/styles/createThemedStyles'
-import { useState } from 'react'
-import { ImageZoom } from '@likashefqet/react-native-image-zoom'
-
-type MemeAPIResponse = {
-  postLink: string
-  subreddit: string
-  title: string
-  url: string
-  nsfw: string
-  spoiler: string
-  author: string
-  ups: string
-  preview: [string, ...string[]]
-}
 
 export default function Index() {
   const { top } = useSafeAreaInsets()
