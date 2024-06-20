@@ -20,6 +20,7 @@ import {
   RedHatDisplay_900Black_Italic,
 } from '@expo-google-fonts/red-hat-display'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import * as NavigationBar from 'expo-navigation-bar';
 
 const client = new QueryClient()
 
@@ -40,6 +41,10 @@ export default function RootLayout() {
     RedHatDisplay_800ExtraBold_Italic,
     RedHatDisplay_900Black_Italic,
   })
+
+  useEffect(() => {
+    NavigationBar.setBehaviorAsync('overlay-swipe')
+  }, [])
 
   useEffect(() => {
     if (loaded) {
