@@ -1,7 +1,7 @@
 import type { MemeAPIResponse } from '@/types/api/meme'
 
 import { useState } from 'react'
-import { Image, Text, View } from 'react-native'
+import { Image, ScrollView, Text, View } from 'react-native'
 import { useSafeAreaFrame, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useQuery } from '@tanstack/react-query'
 import { ImageZoom } from '@likashefqet/react-native-image-zoom'
@@ -43,14 +43,22 @@ export default function Index() {
     <View
       style={[{ paddingTop: top }, styles.screen]}
     >
-      <View style={styles.imageWrapper}>
+      <ScrollView contentContainerStyle={styles.imageWrapper}>
         {
-          memeQuery.isPending ? <Text style={[styles.infoText, styles.loadingText]}>Loading....</Text> :
+          memeQuery.isPending || memeQuery.isRefetching ? <Text style={[styles.infoText, styles.loadingText]}>Loading....</Text> :
             memeQuery.isError ? <Text style={[styles.infoText, styles.errorText]}>Try again later!</Text> :
-              memeQuery.isRefetching ? <Text style={[styles.infoText, styles.loadingText]}>Loading...</Text> :
-                <ImageZoom source={{ uri: memeQuery.data.uri }} {...imageSizes}/>
+              <>
+                <ImageZoom
+                  source={{ uri: memeQuery.data.uri }}
+                  {...imageSizes}
+                  style={{ zIndex: 1, flex: 0 }}
+                />
+                <View>
+                  <Text style={styles.imageText}>{memeQuery.data.title}</Text>
+                </View>
+              </>
         }
-      </View>
+      </ScrollView>
 
       <View style={styles.buttonWrapper}>
         <Button onPress={() => memeQuery.refetch()}>
@@ -70,13 +78,19 @@ const styles = createThemedStyles(({ colors }) => ({
   },
   imageWrapper: {
     flex: 1,
+    gap: 8,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-start',
+  },
+  imageText: {
+    fontFamily: 'RedHatDisplay_600SemiBold',
+    fontSize: 20,
+    color: colors.text.primary,
+    paddingHorizontal: 8,
   },
   infoText: {
-    fontFamily: 'RedHatDisplay_600SemiBold',
+    fontFamily: 'RedHatDisplay_500Medium',
     fontSize: 32,
-    fontWeight: 'semibold',
   },
   errorText: {
     color: colors.danger,
@@ -85,7 +99,7 @@ const styles = createThemedStyles(({ colors }) => ({
     color: colors.text.secondary,
   },
   buttonWrapper: {
-    paddingVertical: 24,
+    paddingVertical: 12,
     justifyContent: 'center',
   },
   buttonText: {
